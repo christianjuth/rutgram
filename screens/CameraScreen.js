@@ -1,0 +1,135 @@
+import React from 'react';
+import { Text, View, TouchableOpacity, StatusBar, StyleSheet } from 'react-native';
+import * as Permissions from 'expo-permissions';
+import { Camera } from 'expo-camera';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+
+
+export default class CameraExample extends React.Component {
+  static navigationOptions = {
+    header: null
+  }
+
+  state = {
+    hasCameraPermission: null,
+    type: Camera.Constants.Type.back,
+    flash: false
+  };
+
+  async componentDidMount() {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({ hasCameraPermission: status === 'granted' });
+  }
+
+  async fixImage(image) {
+    let data = await ImageManipulator.manipulateAsync(image, []);
+    this.props.navigation.navigate('CapturedImage', {
+      image: data
+    });
+  }
+
+  flip() {
+    this.setState({
+      type:
+        this.state.type === Camera.Constants.Type.back
+          ? Camera.Constants.Type.front
+          : Camera.Constants.Type.back,
+    });
+  }
+
+  toggleFlash() {
+    this.setState({
+      flash: !this.state.flash
+    });
+  }
+
+  render() {
+    const { hasCameraPermission } = this.state;
+
+    if(hasCameraPermission === null) {
+      return(
+        <View style={styles.noCameraWrap}/>
+      );
+    }
+
+    if(hasCameraPermission === false) {
+      return(
+        <View style={styles.noCameraWrap}>
+          <Text style={{color: '#fff'}}>No access to camera</Text>
+        </View>
+      );
+    }
+
+    return (
+      <View style={{ flex: 1 }}>
+        <Camera
+          style={{ flex: 1 }}
+          type={this.state.type}
+          ref={ref => this.camera = ref}
+          flashMode={Camera.Constants.FlashMode[this.state.flash ? 'torch' : 'off']}
+        >
+
+          <View style={styles.cameraControlsTop}>
+            <TouchableOpacity onPress={this.toggleFlash.bind(this)}>
+              <MaterialIcons name={this.state.flash ? 'flash-on' : 'flash-off'} color='rgba(255,255,255,0.6)' size={30}/>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.cameraControlsBottom}>
+            <View style={styles.centerItems}>
+              <MaterialIcons color='rgba(255,255,255,0.6)' name='photo' size={30}/>
+            </View>
+            <View style={styles.centerItems}>
+              <TouchableOpacity style={styles.shutter}>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.centerItems}>
+              <TouchableOpacity onPress={this.flip.bind(this)}>
+                <MaterialIcons color='rgba(255,255,255,0.6)' name='loop' size={30}/>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Camera>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+
+  noCameraWrap: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    backgroundColor: '#000'
+  },
+
+  shutter: {
+    borderWidth: 4,
+    borderColor: 'rgba(255,255,255,0.6)',
+    height: 80,
+    width: 80,
+    borderRadius: 100
+  },
+
+  cameraControlsTop: {
+    flex: 1,
+    padding: '5%',
+    paddingTop: '10%',
+    alignItems: 'flex-end'
+  },
+
+  cameraControlsBottom: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-evenly',
+    marginBottom: 20,
+  },
+
+  centerItems: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 80
+  }
+});
