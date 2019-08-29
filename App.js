@@ -7,7 +7,6 @@ import AppNavigator from './navigation/AppNavigator';
 
 const theme = {
   ...DefaultTheme,
-  roundness: 2,
   colors: {
     ...DefaultTheme.colors,
     primary: '#fff',

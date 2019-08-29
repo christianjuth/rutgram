@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import { Appbar, DefaultTheme, Provider as PaperProvider, Avatar, BottomNavigation, ActivityIndicator } from 'react-native-paper';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
@@ -12,15 +12,35 @@ import LikesScreen from '../screens/LikesScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
 
-const config = Platform.select({
-  web: { headerMode: 'screen' },
-  default: {},
+const config = {
+  headerMode: 'screen',
+  defaultNavigationOptions: {
+    header: (props) => {
+      return(
+        <Appbar.Header style={styles.header}>
+          <Appbar.Content title={props.scene.descriptor.options.title}/>
+        </Appbar.Header>
+      );
+    }
+  }
+}
+
+const styles = StyleSheet.create({
+  header: {
+    elevation: 0,
+    borderBottomWidth: 1,
+    borderColor: '#ddd'
+  }
 });
 
 
 
+
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+  Home: {
+    screen: HomeScreen,
+    path: 'home',
+  }
 }, config);
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
@@ -36,7 +56,10 @@ HomeStack.path = '';
 
 
 const SearchStack = createStackNavigator({
-  Search: SearchScreen,
+  Search: {
+    screen: SearchScreen,
+    path: 'search',
+  }
 }, config);
 SearchStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
@@ -51,7 +74,10 @@ SearchStack.path = '';
 
 
 const CameraStack = createStackNavigator({
-  Camera: CameraScreen,
+  Camera: {
+    screen: CameraScreen,
+    path: 'camera',
+  }
 }, config);
 CameraStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
@@ -65,7 +91,10 @@ CameraStack.path = '';
 
 
 const LikesStack = createStackNavigator({
-  Likes: LikesScreen,
+  Likes: {
+    screen: LikesScreen,
+    path: 'likes',
+  }
 }, config);
 LikesStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
@@ -80,7 +109,10 @@ LikesStack.path = '';
 
 
 const ProfileStack = createStackNavigator({
-  Profile: ProfileScreen,
+  Profile: {
+    screen: ProfileScreen,
+    path: 'profile',
+  }
 }, config);
 ProfileStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
