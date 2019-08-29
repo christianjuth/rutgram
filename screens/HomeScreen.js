@@ -11,6 +11,7 @@ import { Appbar, DefaultTheme, Provider as PaperProvider, Avatar, ActivityIndica
 import { Feather, AntDesign } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import DoubleTap from '../components/DoubleTap';
+import axios from 'react-native-axios';
 
 
 export default class Home extends React.Component{
@@ -36,10 +37,12 @@ export default class Home extends React.Component{
   }
 
   async componentDidMount() {
-    let posts = require('../api');
-    this.setState({
-      posts: posts,
-      loading: false
+    axios.get('https://christianjuth.com/rutgers-fake-cdn/rutgram.json')
+    .then((response) => {
+      this.setState({
+        posts: response.data,
+        loading: false
+      });
     });
   }
 
