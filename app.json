@@ -25,6 +25,7 @@
     ],
     "ios": {
       "supportsTablet": false
-    }
+    },
+    "description": ""
   }
 }

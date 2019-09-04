@@ -3,25 +3,29 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   RefreshControl,
-  ScrollView
+  ScrollView,
+  Image
 } from 'react-native';
 import { Appbar, DefaultTheme, Provider as PaperProvider, Avatar, ActivityIndicator } from 'react-native-paper';
 import { Feather, AntDesign } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import DoubleTap from '../components/DoubleTap';
+import PostImage from '../components/Image';
 import axios from 'react-native-axios';
+import { request } from 'graphql-request';
+import { refreshFeed } from '../reducer';
+import { connect } from 'react-redux';
 
 
-export default class Home extends React.Component{
+class Home extends React.Component{
 
   static navigationOptions = {
-    header: () => {
+    header: ({ navigation }) => {
       return(
         <View style={styles.headerWrap}>
           <Appbar style={styles.header}>
-            <Appbar.Action icon="camera-alt"/>
+            <Appbar.Action/>
             <View style={{flex: 1, alignItems: 'center'}}>
               <Image style={{width: 100, height: 60}} resizeMode='contain' source={require('../assets/logo.png')}/>
             </View>
@@ -32,74 +36,59 @@ export default class Home extends React.Component{
     }
   };
 
-  state = {
-    loading: true
+  componentDidMount() {
+    this.refresh();
   }
 
-  async componentDidMount() {
-    axios.get('https://christianjuth.com/rutgers-fake-cdn/rutgram.json')
-    .then((response) => {
-      this.setState({
-        posts: response.data,
-        loading: false
-      });
-    });
+  refresh() {
+    this.props.dispatch(refreshFeed());
   }
 
   onRefresh() {
-    if(this.state.refreshing) return;
-
-    this.setState({ refreshing: true });
-    setTimeout(() => {
-      this.setState({ refreshing: false });
-    }, 2000);
+    // prevent double refresh
+    if(this.props.refreshing) return;
+    // begin refresh
+    this.props.dispatch(refreshFeed());
   }
 
   like(i, value) {
-    let { posts } = this.state;
-    posts = posts.slice();
+    let { feed } = this.props;
+    feed = feed.slice();
     if(typeof value === 'undefined')
-      value = !posts[i].liked;
-    posts[i].liked = value;
-    this.setState({ posts });
+      value = !feed[i].liked;
+    feed[i].liked = value;
+    this.props.dispatch({
+      type: 'updateFeed',
+      payload: feed
+    });
   }
 
-
   render() {
-    if(this.state.loading) return(<ActivityIndicator color="#000" style={{flex: 1}}/>);
+    if(this.props.feed.length == 0) return(<ActivityIndicator color="#000" style={{flex: 1}}/>);
 
     return(
 
       <ScrollView
         style={{flex: 1}}
+        showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            refreshing={this.state.refreshing}
+            refreshing={this.props.refreshing}
             onRefresh={this.onRefresh.bind(this)}
           />
         }
       >
-        {this.state.posts.map((post, i) => (
+        {this.props.feed.map((post, i) => (
           <View key={post.id}>
             <View style={{flexDirection: 'row', padding: 10, paddingLeft: 15}}>
               <Avatar.Image size={40} source={require('../assets/rutgers-avatar.png')} />
               <View style={{justifyContent: 'center', paddingLeft: 10}}>
-                <Text style={styles.bold}>{post.username}</Text>
+                <Text style={styles.bold}>{post.profile.displayName}</Text>
                 <Text>{post.location}</Text>
               </View>
             </View>
             <DoubleTap onDoubleTap={() => this.like(i, true)}>
-              <Image
-                source={{uri: post.image}}
-                style={{width: '100%', paddingTop: '100%', position: 'absolute'}}
-                resizeMode='cover'
-                blurRadius={30}
-              />
-              <Image
-                source={{uri: post.image}}
-                style={{width: '100%', paddingTop: '100%'}}
-                resizeMode='contain'
-              />
+              <PostImage source={{uri: post.image.url}}/>
             </DoubleTap>
             <View style={{padding: 15}}>
               <View style={styles.row}>
@@ -111,7 +100,7 @@ export default class Home extends React.Component{
                 />
                 <Feather style={{paddingLeft: 15}} size={25} name="message-square"/>
               </View>
-              <Text style={styles.p}>Liked by <Text style={styles.bold}>{post.likes} people</Text></Text>
+              <Text style={styles.p}>Liked by <Text style={styles.bold}>{post.likeCount + (+post.liked)} people</Text></Text>
               <Text style={styles.p}>{post.caption}</Text>
             </View>
           </View>
@@ -120,6 +109,16 @@ export default class Home extends React.Component{
     );
   }
 }
+
+const mapStateToProps = state => {
+  console.log(state);
+  return ({
+    feed: state.feed,
+    refreshing: state.feedLoading
+  });
+}
+
+export default connect(mapStateToProps)(Home);
 
 const styles = StyleSheet.create({
   headerWrap: {
@@ -135,7 +134,8 @@ const styles = StyleSheet.create({
   },
 
   p: {
-    marginTop: 8
+    marginTop: 8,
+    fontSize: 15
   },
 
   bold: {

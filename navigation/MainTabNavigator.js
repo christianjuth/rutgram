@@ -40,6 +40,10 @@ const HomeStack = createStackNavigator({
   Home: {
     screen: HomeScreen,
     path: 'home',
+  },
+  Camera: {
+    screen: CameraScreen,
+    path: 'home/camera'
   }
 }, config);
 HomeStack.navigationOptions = {
