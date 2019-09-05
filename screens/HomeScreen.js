@@ -5,9 +5,10 @@ import {
   View,
   RefreshControl,
   ScrollView,
-  Image
+  Image,
+  ActivityIndicator
 } from 'react-native';
-import { Appbar, DefaultTheme, Provider as PaperProvider, Avatar, ActivityIndicator } from 'react-native-paper';
+import { Appbar, DefaultTheme, Provider as PaperProvider, Avatar } from 'react-native-paper';
 import Constants from 'expo-constants';
 import DoubleTap from '../components/DoubleTap';
 import PostImage from '../components/Image';

@@ -1,15 +1,30 @@
 import { dispatch } from 'redux';
 
 import {
+  RESET,
+  SET_PROFILE_ID,
   FEED_LOADING,
   FEED_LOADED,
   FEED_UPDATE,
   LIKES_LOADING,
-  LIKES_LOADED
+  LIKES_LOADED,
+  PROFILE_LOADING,
+  PROFILE_LOADED
 } from './actions';
 
 export default function reducer(state, action) {
   switch (action.type) {
+    case SET_PROFILE_ID:
+      return {
+        ...state,
+        profileId: action.payload
+      };
+    case PROFILE_LOADED:
+      return {
+        ...state,
+        profileLoading: false,
+        profile: action.payload
+      };
     case FEED_LOADING:
       return {
         ...state,
@@ -37,15 +52,31 @@ export default function reducer(state, action) {
         likesLoading: false,
         likes: action.payload
       };
+    case PROFILE_LOADING:
+      return {
+        ...state,
+        profileLoading: true
+      };
+    case PROFILE_LOADED:
+      return {
+        ...state,
+        profileLoading: false,
+        profile: action.payload
+      };
+    case RESET:
+      return initialState;
     default:
       return state;
   }
 }
 
 export const initialState = {
-  username: 'christianjuth',
+  profileId: '',
+  username: '',
   feed: [],
   feedLoading: false,
   likes: [],
-  likesLoading: false
+  likesLoading: false,
+  profile: {},
+  profileLoading: false
 };
