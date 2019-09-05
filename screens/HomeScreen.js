@@ -8,14 +8,12 @@ import {
   Image
 } from 'react-native';
 import { Appbar, DefaultTheme, Provider as PaperProvider, Avatar, ActivityIndicator } from 'react-native-paper';
-import { Feather, AntDesign } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import DoubleTap from '../components/DoubleTap';
 import PostImage from '../components/Image';
-import axios from 'react-native-axios';
-import { request } from 'graphql-request';
-import { refreshFeed } from '../reducer';
 import { connect } from 'react-redux';
+import Icon from '../components/Icon';
+import { FEED_UPDATE, refreshFeed } from '../actions';
 
 
 class Home extends React.Component{
@@ -41,10 +39,6 @@ class Home extends React.Component{
   }
 
   refresh() {
-    this.props.dispatch(refreshFeed());
-  }
-
-  onRefresh() {
     // prevent double refresh
     if(this.props.refreshing) return;
     // begin refresh
@@ -58,7 +52,7 @@ class Home extends React.Component{
       value = !feed[i].liked;
     feed[i].liked = value;
     this.props.dispatch({
-      type: 'updateFeed',
+      type: FEED_UPDATE,
       payload: feed
     });
   }
@@ -74,7 +68,7 @@ class Home extends React.Component{
         refreshControl={
           <RefreshControl
             refreshing={this.props.refreshing}
-            onRefresh={this.onRefresh.bind(this)}
+            onRefresh={this.refresh.bind(this)}
           />
         }
       >
@@ -92,13 +86,8 @@ class Home extends React.Component{
             </DoubleTap>
             <View style={{padding: 15}}>
               <View style={styles.row}>
-                <AntDesign
-                  size={25}
-                  name={'heart' + (post.liked ? '' : 'o')}
-                  color={post.liked ? '#cc0033' : '#000'}
-                  onPress={() => this.like(i)}
-                />
-                <Feather style={{paddingLeft: 15}} size={25} name="message-square"/>
+                <Icon size={30} name={'heart-' + (post.liked ? 'red' : 'o')} onPress={() => this.like(i)} style={{marginRight: 5}}/>
+                <Icon size={30} name='message-o'/>
               </View>
               <Text style={styles.p}>Liked by <Text style={styles.bold}>{post.likeCount + (+post.liked)} people</Text></Text>
               <Text style={styles.p}>{post.caption}</Text>
@@ -111,7 +100,6 @@ class Home extends React.Component{
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return ({
     feed: state.feed,
     refreshing: state.feedLoading
@@ -128,7 +116,7 @@ const styles = StyleSheet.create({
   header: {
     elevation: 0,
     marginTop: Constants.statusBarHeight,
-    height: 60,
+    height: 56,
     borderBottomWidth: 1,
     borderColor: '#ddd'
   },

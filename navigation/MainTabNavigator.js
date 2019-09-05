@@ -4,6 +4,8 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import { Appbar, DefaultTheme, Provider as PaperProvider, Avatar, BottomNavigation, ActivityIndicator } from 'react-native-paper';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
+import Icon from '../components/Icon';
+
 
 import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
@@ -49,10 +51,7 @@ const HomeStack = createStackNavigator({
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
-    <MaterialCommunityIcons
-      size={30}
-      name={'home'}
-    />
+    <Icon size={30} name={'home' + (focused ? '' : '-o')}/>
   ),
 };
 HomeStack.path = '';
@@ -67,10 +66,7 @@ const SearchStack = createStackNavigator({
 }, config);
 SearchStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
-    <MaterialIcons
-      size={30}
-      name={'search'}
-    />
+    <Icon size={30} name={'search' + (focused ? '' : '-o')}/>
   ),
 };
 SearchStack.path = '';
@@ -85,10 +81,7 @@ const CameraStack = createStackNavigator({
 }, config);
 CameraStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
-    <MaterialIcons
-      size={30}
-      name={'add-box'}
-    />
+    <Icon size={30} name={'add-box' + (focused ? '' : '-o')}/>
   ),
 };
 CameraStack.path = '';
@@ -102,10 +95,7 @@ const LikesStack = createStackNavigator({
 }, config);
 LikesStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
-    <MaterialCommunityIcons
-      size={30}
-      name={'heart'}
-    />
+    <Icon size={30} name={'heart' + (focused ? '' : '-o')}/>
   ),
 };
 LikesStack.path = '';
@@ -120,10 +110,7 @@ const ProfileStack = createStackNavigator({
 }, config);
 ProfileStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
-    <MaterialIcons
-      size={30}
-      name={'person'}
-    />
+    <Icon size={30} name={'person' + (focused ? '' : '-o')}/>
   ),
 };
 ProfileStack.path = '';

@@ -30,12 +30,12 @@ export default class SettingsScreen extends React.Component{
       }
     }`;
 
-    request(global.apiEndpoint, query)
-    .then(data => {
-      this.setState({
-        results: data.profiles
-      });
-    });
+    // request(global.apiEndpoint, query)
+    // .then(data => {
+    //   this.setState({
+    //     results: data.profiles
+    //   });
+    // });
   }
 
   onChangeText(text) {

@@ -7,16 +7,9 @@ import AppNavigator from './navigation/AppNavigator';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import reducer from './reducer';
+import reducer, { initialState } from './reducer';
 
-global.apiEndpoint = 'https://api-useast.graphcms.com/v1/ck041h6kf0eri01bx3rtqe0du/master';
-
-const INITIAL_STATE = {
-  username: 'christianjuth',
-  feed: [],
-  feedLoading: true
-};
-const store = createStore(reducer, INITIAL_STATE, applyMiddleware(thunk));
+const store = createStore(reducer, initialState, applyMiddleware(thunk));
 
 const theme = {
   ...DefaultTheme,

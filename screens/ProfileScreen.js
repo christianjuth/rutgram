@@ -23,13 +23,6 @@ class SettingsScreen extends React.PureComponent{
 
   componentDidMount() {
     this.updateHeader();
-
-    setTimeout(() => {
-      this.props.dispatch({
-        type: 'setUsername',
-        username: 'default'
-      });
-    }, 3000);
   }
 
   render() {

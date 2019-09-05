@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, ScrollView, Text, StyleSheet } from 'react-native';
-import { request } from 'graphql-request';
+import { View, ScrollView, Text, StyleSheet, RefreshControl, ActivityIndicator } from 'react-native';
+import { connect } from 'react-redux';
 import { Avatar } from 'react-native-paper';
+import { refreshLikes } from '../actions';
 
-export default class SettingsScreen extends React.Component{
+class LikesScreen extends React.Component{
   static navigationOptions = {
     title: 'Likes',
   };
@@ -16,24 +17,27 @@ export default class SettingsScreen extends React.Component{
     this.refresh();
   }
 
-  async refresh(search) {
-    const query = `{
-      likes{
-        id
-        profile{
-          username
-        }
-      }
-    }`;
-
-    let data = await request(global.apiEndpoint, query);
-    this.setState({ likes: data.likes });
+  refresh() {
+    // prevent double refresh
+    if(this.props.refreshing) return;
+    // begin refresh
+    this.props.dispatch(refreshLikes());
   }
 
   render() {
+    if(this.props.likes.length == 0) return(<ActivityIndicator color="#000" style={{flex: 1}}/>);
+
     return(
-      <ScrollView style={styles.container}>
-        {this.state.likes.map(l => (
+      <ScrollView
+        style={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.props.refreshing}
+            onRefresh={this.refresh.bind(this)}
+          />
+        }
+      >
+        {this.props.likes.map(l => (
           <View key={l.id} style={styles.row}>
             <Avatar.Image size={40} style={styles.avatar} source={require('../assets/rutgers-avatar.png')} />
             <View>
@@ -47,6 +51,15 @@ export default class SettingsScreen extends React.Component{
   }
 }
 
+const mapStateToProps = state => {
+  return ({
+    likes: state.likes,
+    refreshing: state.likesLoading
+  });
+}
+
+export default connect(mapStateToProps)(LikesScreen);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1
@@ -55,8 +68,8 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     padding: 15,
-    paddingTop: 18,
-    paddingBottom: 0
+    paddingTop: 10,
+    paddingBottom: 5
   },
 
   avatar: {
