@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: Constants.statusBarHeight || 10,
     borderBottomWidth: 1,
-    borderColor: '#ddd'
+    borderColor: '#eee'
   },
 
   headerInput: {

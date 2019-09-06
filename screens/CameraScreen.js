@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, StatusBar, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, StatusBar, StyleSheet, SafeAreaView } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
@@ -43,6 +43,10 @@ export default class CameraExample extends React.Component {
     });
   }
 
+  goBack() {
+    this.props.navigation.navigate('Home');
+  }
+
   render() {
     const { hasCameraPermission } = this.state;
 
@@ -68,27 +72,32 @@ export default class CameraExample extends React.Component {
           ref={ref => this.camera = ref}
           flashMode={Camera.Constants.FlashMode[this.state.flash ? 'torch' : 'off']}
         >
-
-          <View style={styles.cameraControlsTop}>
-            <TouchableOpacity onPress={this.toggleFlash.bind(this)}>
-              <MaterialIcons name={this.state.flash ? 'flash-on' : 'flash-off'} color='rgba(255,255,255,0.6)' size={30}/>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.cameraControlsBottom}>
-            <View style={styles.centerItems}>
-              <MaterialIcons color='rgba(255,255,255,0.6)' name='photo' size={30}/>
-            </View>
-            <View style={styles.centerItems}>
-              <TouchableOpacity style={styles.shutter}>
+          <SafeAreaView style={{flex: 1}}>
+            <View style={styles.cameraControlsTop}>
+              <TouchableOpacity onPress={this.goBack.bind(this)}>
+                <MaterialIcons name='close' color='rgba(255,255,255,0.6)' size={30}/>
+              </TouchableOpacity>
+              <View style={{flex: 1}}/>
+              <TouchableOpacity onPress={this.toggleFlash.bind(this)}>
+                <MaterialIcons name={this.state.flash ? 'flash-on' : 'flash-off'} color='rgba(255,255,255,0.6)' size={30}/>
               </TouchableOpacity>
             </View>
-            <View style={styles.centerItems}>
-              <TouchableOpacity onPress={this.flip.bind(this)}>
-                <MaterialIcons color='rgba(255,255,255,0.6)' name='loop' size={30}/>
-              </TouchableOpacity>
+
+            <View style={styles.cameraControlsBottom}>
+              <View style={styles.centerItems}>
+                <MaterialIcons color='rgba(255,255,255,0.6)' name='photo' size={30}/>
+              </View>
+              <View style={styles.centerItems}>
+                <TouchableOpacity style={styles.shutter}>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.centerItems}>
+                <TouchableOpacity onPress={this.flip.bind(this)}>
+                  <MaterialIcons color='rgba(255,255,255,0.6)' name='loop' size={30}/>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
+          </SafeAreaView>
         </Camera>
       </View>
     );
@@ -115,8 +124,8 @@ const styles = StyleSheet.create({
   cameraControlsTop: {
     flex: 1,
     padding: '5%',
-    paddingTop: '10%',
-    alignItems: 'flex-end'
+    paddingTop: 0,
+    flexDirection: 'row'
   },
 
   cameraControlsBottom: {

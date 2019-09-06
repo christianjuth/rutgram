@@ -1,25 +1,19 @@
 import React from 'react';
 import { View, AsyncStorage, Button, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { Avatar } from 'react-native-paper';
-import { refreshProfile, RESET } from '../actions';
+import { Avatar, Appbar } from 'react-native-paper';
+import { refreshProfile, RESET } from '../../actions';
+import { Ionicons } from '@expo/vector-icons';
 
 class SettingsScreen extends React.PureComponent{
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam('title'),
+      headerRight: (
+        <Appbar.Action icon="settings" onPress={() => {
+          navigation.navigate('Settings');
+        }}/>
+      )
     };
-  }
-
-  componentDidMount() {
-    this.refresh();
-  }
-
-  refresh() {
-    // prevent double refresh
-    if(this.props.refreshing) return;
-    // begin refresh
-    this.props.dispatch(refreshProfile());
   }
 
   componentWillReceiveProps(newProps) {
@@ -34,20 +28,23 @@ class SettingsScreen extends React.PureComponent{
     });
   }
 
-  _signOutAsync = async () => {
-    await AsyncStorage.clear();
-    await this.props.dispatch({ type: RESET });
-    this.props.navigation.navigate('Auth');
-  };
+  componentDidMount() {
+    this.refresh();
+  }
+
+  refresh() {
+    // prevent double refresh
+    if(this.props.refreshing) return;
+    // begin refresh
+    this.props.dispatch(refreshProfile());
+  }
 
   render() {
     if(!this.props.profile || !this.props.profile.username)
       return(<ActivityIndicator color="#000" style={{flex: 1}}/>);
 
     return(
-      <View>
-        <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
-      </View>
+      <View></View>
     );
   }
 }

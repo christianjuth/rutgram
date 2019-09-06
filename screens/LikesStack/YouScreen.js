@@ -2,11 +2,11 @@ import React from 'react';
 import { View, ScrollView, Text, StyleSheet, RefreshControl, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { Avatar } from 'react-native-paper';
-import { refreshLikes } from '../actions';
+import { refreshLikes } from '../../actions';
 
 class LikesScreen extends React.Component{
   static navigationOptions = {
-    title: 'Likes',
+    title: 'You',
   };
 
   state = {
@@ -25,7 +25,7 @@ class LikesScreen extends React.Component{
   }
 
   render() {
-    if(this.props.likes.length == 0) return(<ActivityIndicator color="#000" style={{flex: 1}}/>);
+    if(this.props.likes == null) return(<ActivityIndicator color="#000" style={{flex: 1}}/>);
 
     return(
       <ScrollView
@@ -39,7 +39,7 @@ class LikesScreen extends React.Component{
       >
         {this.props.likes.map(l => (
           <View key={l.id} style={styles.row}>
-            <Avatar.Image size={40} style={styles.avatar} source={require('../assets/rutgers-avatar.png')} />
+            <Avatar.Image size={40} style={styles.avatar} source={require('../../assets/rutgers-avatar.png')} />
             <View>
               <Text style={styles.bold}>{l.profile.username}</Text>
               <Text>liked your photo</Text>
@@ -62,7 +62,8 @@ export default connect(mapStateToProps)(LikesScreen);
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#fff'
   },
 
   row: {

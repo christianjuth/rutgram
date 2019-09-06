@@ -75,7 +75,7 @@ export const initialState = {
   username: '',
   feed: [],
   feedLoading: false,
-  likes: [],
+  likes: null,
   likesLoading: false,
   profile: {},
   profileLoading: false

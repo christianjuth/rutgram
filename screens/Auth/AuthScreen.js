@@ -1,17 +1,14 @@
 import React from 'react';
 import { View, AsyncStorage, TextInput, Image, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
+// import { Button } from 'react-native-paper';
 import { request } from 'graphql-request';
 import { connect } from 'react-redux';
-import { SET_PROFILE_ID } from '../actions';
+import { SET_PROFILE_ID } from '../../actions';
+import Button from '../../components/StyledButton';
 
 const endpoint = 'https://api-useast.graphcms.com/v1/ck041h6kf0eri01bx3rtqe0du/master';
 
 class SignInScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Please sign in',
-  };
-
   state = {
     username: ''
   }
@@ -53,7 +50,7 @@ class SignInScreen extends React.Component {
         <Image
           style={[styles.logo, styles.spacing]}
           resizeMode='contain'
-          source={require('../assets/logo.png')}
+          source={require('../../assets/logo.png')}
         />
         <TextInput
           style={[styles.textInput, styles.spacing]}
@@ -62,7 +59,7 @@ class SignInScreen extends React.Component {
           value={this.state.username}
           autoCapitalize='none'
         />
-      <Button style={styles.button} mode="contained" dark={true} color='#3798f0' onPress={this.login.bind(this)}>Log in</Button>
+        <Button onPress={this.login.bind(this)}>Log in</Button>
       </View>
     );
   }
@@ -74,7 +71,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 25,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: '#fff'
   },
 
   logo: {
@@ -87,10 +85,6 @@ const styles = StyleSheet.create({
     height: 40,
     padding: 10,
     borderRadius: 4
-  },
-
-  button: {
-    elevation: 0
   },
 
   spacing: {

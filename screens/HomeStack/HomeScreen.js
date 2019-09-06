@@ -8,31 +8,18 @@ import {
   Image,
   ActivityIndicator
 } from 'react-native';
-import { Appbar, DefaultTheme, Provider as PaperProvider, Avatar } from 'react-native-paper';
-import Constants from 'expo-constants';
-import DoubleTap from '../components/DoubleTap';
-import PostImage from '../components/Image';
+import { Avatar } from 'react-native-paper';
+import DoubleTap from '../../components/DoubleTap';
+import PostImage from '../../components/Image';
 import { connect } from 'react-redux';
-import Icon from '../components/Icon';
-import { FEED_UPDATE, refreshFeed } from '../actions';
+import Icon from '../../components/Icon';
+import { FEED_UPDATE, refreshFeed } from '../../actions';
+import Header from './Header';
 
 
 class Home extends React.Component{
-
   static navigationOptions = {
-    header: ({ navigation }) => {
-      return(
-        <View style={styles.headerWrap}>
-          <Appbar style={styles.header}>
-            <Appbar.Action/>
-            <View style={{flex: 1, alignItems: 'center'}}>
-              <Image style={{width: 100, height: 60}} resizeMode='contain' source={require('../assets/logo.png')}/>
-            </View>
-            <Appbar.Action icon="people"/>
-          </Appbar>
-        </View>
-      );
-    }
+    header: ({ navigation }) => (<Header navigation={navigation}/>)
   };
 
   componentDidMount() {
@@ -62,7 +49,6 @@ class Home extends React.Component{
     if(this.props.feed.length == 0) return(<ActivityIndicator color="#000" style={{flex: 1}}/>);
 
     return(
-
       <ScrollView
         style={{flex: 1}}
         showsVerticalScrollIndicator={false}
@@ -76,7 +62,7 @@ class Home extends React.Component{
         {this.props.feed.map((post, i) => (
           <View key={post.id}>
             <View style={{flexDirection: 'row', padding: 10, paddingLeft: 15}}>
-              <Avatar.Image size={40} source={require('../assets/rutgers-avatar.png')} />
+              <Avatar.Image size={40} source={require('../../assets/rutgers-avatar.png')} />
               <View style={{justifyContent: 'center', paddingLeft: 10}}>
                 <Text style={styles.bold}>{post.profile.displayName}</Text>
                 <Text>{post.location}</Text>
@@ -110,18 +96,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps)(Home);
 
 const styles = StyleSheet.create({
-  headerWrap: {
-    backgroundColor: '#fff'
-  },
-
-  header: {
-    elevation: 0,
-    marginTop: Constants.statusBarHeight,
-    height: 56,
-    borderBottomWidth: 1,
-    borderColor: '#ddd'
-  },
-
   p: {
     marginTop: 8,
     fontSize: 15
