@@ -28,7 +28,7 @@ const config = {
   defaultNavigationOptions: {
     header: (props) => {
       let { descriptor, index, route } = props.scene,
-          { options, navigation } = descriptor,
+          { options, navigation, showBorder } = descriptor,
           { params } = route,
           title = options.title;
 
@@ -36,7 +36,7 @@ const config = {
         title = params.title;
 
       return(
-        <Appbar.Header style={styles.header}>
+        <Appbar.Header style={showBorder === false ? styles.headerNoBorder : styles.header}>
           {index > 0 ? (<Appbar.BackAction onPress={() => navigation.goBack()}/>) : null}
           {options.headerLeft}
           <Appbar.Content title={title}/>
@@ -72,6 +72,9 @@ const styles = StyleSheet.create({
     elevation: 0,
     borderBottomWidth: 0.5,
     borderColor: '#aaa'
+  },
+  header: {
+    elevation: 0
   }
 });
 

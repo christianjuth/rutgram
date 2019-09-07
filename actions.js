@@ -111,7 +111,12 @@ export function refreshProfile() {
 
     const query = `{
       profile(where: { id: "${state.profileId}" }){
-        username  
+        username
+        displayName
+        bio
+        posts{
+          id
+        }
       }
     }`;
 

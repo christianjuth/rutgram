@@ -5,10 +5,10 @@ import { Button } from 'react-native-paper';
 export default (props) => {
   return(
     <Button
+      mode='contained'
       {...props}
-      mode="contained"
       dark={true}
-      color='#3798f0'
+      color={props.mode !== 'outlined' ? '#3798f0' : '#000'}
       style={[styles.noShadow, props.style]}
       uppercase={false}
     >{props.children}</Button>
