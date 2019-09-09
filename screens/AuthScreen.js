@@ -2,8 +2,8 @@ import React from 'react';
 import { View, AsyncStorage, TextInput, Image, StyleSheet, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
 import { request } from 'graphql-request';
 import { connect } from 'react-redux';
-import { SET_PROFILE_ID } from '../../actions';
-import Button from '../../components/StyledButton';
+import { SET_PROFILE_ID } from '../actions';
+import Button from '../components/StyledButton';
 
 const endpoint = 'https://api-useast.graphcms.com/v1/ck041h6kf0eri01bx3rtqe0du/master';
 
@@ -83,7 +83,7 @@ class SignInScreen extends React.Component {
         <Image
           style={[styles.logo, styles.spacing]}
           resizeMode='contain'
-          source={require('../../assets/logo.png')}
+          source={require('../assets/logo.png')}
         />
         <TextInput
           style={[styles.textInput, styles.spacing]}

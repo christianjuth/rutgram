@@ -10,7 +10,7 @@ export default class DoubleTap extends React.Component{
   state = {
     showLike: false
   }
-  lastPress = 0
+  lastPress = 0;
 
   onPress() {
     var delta = new Date().getTime() - this.lastPress;

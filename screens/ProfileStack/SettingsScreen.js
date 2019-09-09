@@ -11,17 +11,6 @@ class SettingsScreen extends React.PureComponent{
     tabBarVisible: false,
   }
 
-  componentDidMount() {
-    this.refresh();
-  }
-
-  refresh() {
-    // prevent double refresh
-    if(this.props.refreshing) return;
-    // begin refresh
-    this.props.dispatch(refreshProfile());
-  }
-
   _signOutAsync = async () => {
     await AsyncStorage.clear();
     await this.props.dispatch({ type: RESET });
@@ -29,9 +18,6 @@ class SettingsScreen extends React.PureComponent{
   };
 
   render() {
-    if(!this.props.profile || !this.props.profile.username)
-      return(<ActivityIndicator color="#000" style={{flex: 1}}/>);
-
     return(
       <View style={styles.container}>
         <Button mode='outlined' onPress={this._signOutAsync}>Sign out</Button>

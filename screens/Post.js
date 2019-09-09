@@ -8,11 +8,11 @@ import {
   ActivityIndicator,
   AppState
 } from 'react-native';
-import { Avatar } from 'react-native-paper';
 import DoubleTap from '../components/DoubleTap';
 import PostImage from '../components/Image';
 import { connect } from 'react-redux';
 import Icon from '../components/Icon';
+import Avatar from '../components/Avatar';
 
 class Post extends React.Component{
   static navigationOptions = {
@@ -64,7 +64,7 @@ class Post extends React.Component{
     return(
       <ScrollView>
         <View style={{flexDirection: 'row', padding: 10, paddingLeft: 15}}>
-          <Avatar.Image size={40} source={require('../assets/rutgers-avatar.png')} />
+          <Avatar size={40} source={{uri: post.profile.profilePicture.url}}/>
           <View style={{justifyContent: 'center', paddingLeft: 10}}>
             <Text style={styles.bold}>{post.profile.displayName}</Text>
             <Text>{post.location}</Text>

@@ -3,7 +3,7 @@ import { dispatch } from 'redux';
 import {
   RESET,
   SET_PROFILE_ID,
-  FEED_LOADING,
+  FEED_REFRESH,
   FEED_LOADED,
   FEED_UPDATE,
   LIKES_LOADING,
@@ -25,15 +25,16 @@ export default function reducer(state, action) {
         profileLoading: false,
         profile: action.payload
       };
-    case FEED_LOADING:
+    case FEED_REFRESH:
       return {
         ...state,
-        feedLoading: true
+        feedRefreshing: true
       };
     case FEED_LOADED:
       return {
         ...state,
-        feedLoading: false,
+        feedLoaded: false,
+        feedRefreshing: false,
         feed: action.payload
       };
     case FEED_UPDATE:
@@ -55,12 +56,13 @@ export default function reducer(state, action) {
     case PROFILE_LOADING:
       return {
         ...state,
-        profileLoading: true
+        profileRefreshing: true
       };
     case PROFILE_LOADED:
       return {
         ...state,
         profileLoading: false,
+        profileRefreshing: false,
         profile: action.payload
       };
     case RESET:
@@ -74,9 +76,11 @@ export const initialState = {
   profileId: '',
   username: '',
   feed: [],
-  feedLoading: false,
+  feedLoaded: true,
+  feedRefreshing: false,
   likes: null,
   likesLoading: false,
   profile: {},
-  profileLoading: false
+  profileLoading: true,
+  profileRefreshing: false
 };

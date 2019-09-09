@@ -42,7 +42,7 @@ const config = {
         <Appbar.Header style={showBorder === false ? styles.headerNoBorder : styles.header}>
           {index > 0 ? (<Appbar.BackAction onPress={() => navigation.goBack()}/>) : null}
           {options.headerLeft}
-          <Appbar.Content title={title}/>
+          <Appbar.Content title={title || ''}/>
           {options.headerRight}
         </Appbar.Header>
       );

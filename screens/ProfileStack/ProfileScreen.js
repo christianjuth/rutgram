@@ -1,13 +1,22 @@
+/*
+ * Fire: ProfileScreen.js
+ * Author: Christian Juth
+ * Description:
+ *   The profile screen for the current logged in user
+ * State: Redux
+ */
+
 import React from 'react';
 import { View, AsyncStorage, ActivityIndicator, StyleSheet, Text, ScrollView, RefreshControl, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { Avatar, Appbar } from 'react-native-paper';
+import { Appbar } from 'react-native-paper';
 import { refreshProfile, RESET } from '../../actions';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '../../components/StyledButton';
-import Image from '../../components/Image'
+import Image from '../../components/Image';
+import Avatar from '../../components/Avatar';
 
-class SettingsScreen extends React.PureComponent{
+class ProfileScreen extends React.PureComponent{
   static navigationOptions = ({ navigation }) => {
     return {
       headerRight: (
@@ -19,6 +28,11 @@ class SettingsScreen extends React.PureComponent{
     };
   }
 
+  // THIS SHOULD BE REMOVED
+  // according to react, this method
+  // is legacy and should be avoided
+  // (will continue to work until react version 17)
+  // https://reactjs.org/docs/react-component.html#unsafe_componentwillreceiveprops
   componentWillReceiveProps(newProps) {
     if(newProps.profile != this.props.profile)
       this.updateHeader(newProps)
@@ -65,7 +79,7 @@ class SettingsScreen extends React.PureComponent{
       >
         <View style={styles.header}>
           <View style={styles.stats}>
-            <Avatar.Image size={70} source={require('../../assets/rutgers-avatar.png')}/>
+            <Avatar size={80} source={{uri: profile.profilePicture.url}}/>
             <View style={styles.col}>
               <Text style={[styles.textCenter, styles.bold]}>{profile.posts.length}</Text>
               <Text style={styles.textCenter}>Posts</Text>
@@ -104,16 +118,16 @@ class SettingsScreen extends React.PureComponent{
 
 const mapStateToProps = state => {
   return ({
-    refreshing: state.profileLoading,
-    profile: state.profile
+    profile: state.profile,
+    loading: state.profileLoading,
+    refreshing: state.profileRefreshing
   });
 }
 
-export default connect(mapStateToProps)(SettingsScreen);
+export default connect(mapStateToProps)(ProfileScreen);
 
 
 const styles = StyleSheet.create({
-
   container: {
     backgroundColor: '#f6f6f6'
   },

@@ -10,14 +10,15 @@ export const RESET = 'RESET';
  * home page feed
  */
 
-export const FEED_LOADING = 'FEED_LOADIG';
+export const FEED_REFRESH = 'FEED_REFRESH';
 export const FEED_LOADED = 'FEED_LOADED';
 export const FEED_UPDATE = 'FEED_UPDATE';
 
 export function refreshFeed() {
   return function(dispatch, getState) {
+
     dispatch({
-      type: FEED_LOADING
+      type: FEED_REFRESH
     });
 
     let state = getState();
@@ -39,6 +40,9 @@ export function refreshFeed() {
               profile{
                 id
                 displayName
+                profilePicture{
+                  url
+                }
               }
               image{
                 url
@@ -62,6 +66,10 @@ export function refreshFeed() {
         post.liked = post.likes.map(l => l.profile.id).includes(state.profileId);
         post.likeCount = post.likes.length;
         if(post.liked) post.likeCount--;
+      });
+
+      posts.sort((a, b) => {
+        return a.createdAt > b.createdAt ? 1 : -1;
       });
 
       dispatch({
@@ -113,8 +121,7 @@ export function refreshLikes() {
 
 
 /*
- * likes page
- * (shows who has liked your posts)
+ * profile page
  */
 
 export const PROFILE_LOADING = 'PROFILE_LOADING';
@@ -129,6 +136,9 @@ export function refreshProfile() {
         username
         displayName
         bio
+        profilePicture{
+          url
+        }
         followers{
           fan{
             id
@@ -153,6 +163,9 @@ export function refreshProfile() {
           }
           profile{
             displayName
+            profilePicture{
+              url
+            }
           }
           image{
             url

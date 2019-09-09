@@ -8,13 +8,13 @@ import {
   Image,
   ActivityIndicator
 } from 'react-native';
-import { Avatar } from 'react-native-paper';
 import DoubleTap from '../../components/DoubleTap';
 import PostImage from '../../components/Image';
 import { connect } from 'react-redux';
 import Icon from '../../components/Icon';
 import { FEED_UPDATE, refreshFeed } from '../../actions';
 import Header from './Header';
+import Avatar from '../../components/Avatar';
 
 
 class Home extends React.Component{
@@ -50,12 +50,11 @@ class Home extends React.Component{
   }
 
   render() {
-    if(this.props.feed.length == 0) return(<ActivityIndicator color="#000" style={{flex: 1}}/>);
+    if(this.props.loading) return(<ActivityIndicator color="#000" style={{flex: 1}}/>);
 
     return(
       <ScrollView
         style={{flex: 1}}
-        showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
             refreshing={this.props.refreshing}
@@ -63,10 +62,13 @@ class Home extends React.Component{
           />
         }
       >
+        <View style={{flexDirection: 'row', padding: 8, borderBottomWidth: 1, borderColor: '#ddd'}}>
+          <Avatar size={60}/>
+        </View>
         {this.props.feed.map((post, i) => (
           <View key={post.id}>
-            <View style={{flexDirection: 'row', padding: 10, paddingLeft: 15}}>
-              <Avatar.Image size={40} source={require('../../assets/rutgers-avatar.png')} />
+            <View style={{flexDirection: 'row', padding: 10, paddingLeft: 12}}>
+              <Avatar size={40} source={{uri: post.profile.profilePicture.url}}/>
               <View style={{justifyContent: 'center', paddingLeft: 10}}>
                 <Text style={styles.bold} onPress={() => this.viewProfile(post.profile)}>{post.profile.displayName}</Text>
                 <Text>{post.location}</Text>
@@ -93,7 +95,8 @@ class Home extends React.Component{
 const mapStateToProps = state => {
   return ({
     feed: state.feed,
-    refreshing: state.feedLoading
+    loading: state.feedLoaded,
+    refreshing: state.feedRefreshing
   });
 }
 

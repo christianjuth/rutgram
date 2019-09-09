@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, AsyncStorage, ActivityIndicator, StyleSheet, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { Avatar, Appbar } from 'react-native-paper';
+import { Appbar } from 'react-native-paper';
 import { refreshProfile, RESET } from '../../actions';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '../../components/StyledButton';
 import Image from '../../components/Image'
 import { request } from 'graphql-request';
+import Avatar from '../../components/Avatar';
 
 class SettingsScreen extends React.PureComponent{
   static navigationOptions = ({ navigation }) => {
@@ -34,6 +35,9 @@ class SettingsScreen extends React.PureComponent{
         username
         displayName
         bio
+        profilePicture{
+          url
+        }
         followers{
           fan{
             id
@@ -78,6 +82,10 @@ class SettingsScreen extends React.PureComponent{
     this.props.navigation.navigate('Post', { post });
   }
 
+  toggleFollow() {
+    console.log('implement toogle follow button');
+  }
+
   render() {
     if(!this.state.profile.username)
       return(<ActivityIndicator color="#000" style={{flex: 1}}/>);
@@ -88,7 +96,7 @@ class SettingsScreen extends React.PureComponent{
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           <View style={styles.stats}>
-            <Avatar.Image size={70} source={require('../../assets/rutgers-avatar.png')}/>
+            <Avatar size={80} source={{uri: profile.profilePicture.url}}/>
             <View style={styles.col}>
               <Text style={[styles.textCenter, styles.bold]}>{profile.posts.length}</Text>
               <Text style={styles.textCenter}>Posts</Text>
@@ -105,7 +113,7 @@ class SettingsScreen extends React.PureComponent{
           <Text style={styles.bold}>{profile.displayName}</Text>
           <Text>{profile.bio}</Text>
           <View style={styles.spacer}/>
-          <Button>Follow</Button>
+          <Button onPress={this.toggleFollow}>Follow</Button>
         </View>
 
         <View style={styles.posts}>

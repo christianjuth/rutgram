@@ -1,6 +1,6 @@
 import { AppLoading } from 'expo';
 import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { Appbar, DefaultTheme, Provider as PaperProvider, Avatar, BottomNavigation, ActivityIndicator } from 'react-native-paper';
 import Constants from 'expo-constants';
 import { withNavigation } from 'react-navigation';
@@ -11,7 +11,7 @@ import thunk from 'redux-thunk';
 import { Provider, connect } from 'react-redux';
 import reducer, { initialState } from './reducer';
 
-import AuthLoadingScreen from './screens/Auth/AuthScreen';
+import AuthScreen from './screens/AuthScreen';
 const store = createStore(reducer, initialState, applyMiddleware(thunk));
 
 global.endpoint = 'https://api-useast.graphcms.com/v1/ck041h6kf0eri01bx3rtqe0du/master';
@@ -29,7 +29,7 @@ class WithAuth extends React.Component{
   render() {
     if(!this.props.profileId){
       return(
-        <AuthLoadingScreen/>
+        <AuthScreen/>
       );
     }
 
