@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, AsyncStorage, TextInput, Image, StyleSheet } from 'react-native';
-// import { Button } from 'react-native-paper';
+import { View, AsyncStorage, TextInput, Image, StyleSheet, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
 import { request } from 'graphql-request';
 import { connect } from 'react-redux';
 import { SET_PROFILE_ID } from '../../actions';
@@ -10,8 +9,31 @@ const endpoint = 'https://api-useast.graphcms.com/v1/ck041h6kf0eri01bx3rtqe0du/m
 
 class SignInScreen extends React.Component {
   state = {
-    username: ''
+    username: '',
+    loading: true
   }
+
+  componentDidMount() {
+    this._bootstrapAsync();
+  }
+
+  // Fetch the token from storage then navigate to our appropriate place
+  _bootstrapAsync = async () => {
+    const userId = await AsyncStorage.getItem('userId');
+
+    // This will switch to the App screen or Auth screen and this loading
+    // screen will be unmounted and thrown away.
+    if(userId){
+      this.props.dispatch({
+        type: SET_PROFILE_ID,
+        payload: userId
+      });
+    } else{
+      this.setState({
+        loading: false
+      });
+    }
+  };
 
   async login() {
     let { username } = this.state;
@@ -37,16 +59,27 @@ class SignInScreen extends React.Component {
       type: SET_PROFILE_ID,
       payload: profile.id
     });
-    this.props.navigation.navigate('App');
   }
 
   onChangeText(username) {
     this.setState({ username });
   }
 
+
+
   render() {
+
+    if(this.state.loading){
+      return(
+        <ActivityIndicator style={{flex: 1}} color='#000'/>
+      );
+    }
+
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : null}
+        style={styles.container}
+      >
         <Image
           style={[styles.logo, styles.spacing]}
           resizeMode='contain'
@@ -60,12 +93,18 @@ class SignInScreen extends React.Component {
           autoCapitalize='none'
         />
         <Button onPress={this.login.bind(this)}>Log in</Button>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
 
-export default connect()(SignInScreen);
+const mapStateToProps = state => {
+  return ({
+    profileId: state.profileId
+  });
+}
+
+export default connect(mapStateToProps)(SignInScreen);
 
 const styles = StyleSheet.create({
   container: {

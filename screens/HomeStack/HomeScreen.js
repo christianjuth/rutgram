@@ -45,6 +45,10 @@ class Home extends React.Component{
     });
   }
 
+  viewProfile(profile) {
+    this.props.navigation.navigate('Profile', { profile });
+  }
+
   render() {
     if(this.props.feed.length == 0) return(<ActivityIndicator color="#000" style={{flex: 1}}/>);
 
@@ -64,7 +68,7 @@ class Home extends React.Component{
             <View style={{flexDirection: 'row', padding: 10, paddingLeft: 15}}>
               <Avatar.Image size={40} source={require('../../assets/rutgers-avatar.png')} />
               <View style={{justifyContent: 'center', paddingLeft: 10}}>
-                <Text style={styles.bold}>{post.profile.displayName}</Text>
+                <Text style={styles.bold} onPress={() => this.viewProfile(post.profile)}>{post.profile.displayName}</Text>
                 <Text>{post.location}</Text>
               </View>
             </View>

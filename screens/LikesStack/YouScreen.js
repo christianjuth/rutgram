@@ -41,8 +41,7 @@ class LikesScreen extends React.Component{
           <View key={l.id} style={styles.row}>
             <Avatar.Image size={40} style={styles.avatar} source={require('../../assets/rutgers-avatar.png')} />
             <View>
-              <Text style={styles.bold}>{l.profile.username}</Text>
-              <Text>liked your photo</Text>
+              <Text><Text style={styles.bold}>{l.profile.username}</Text> liked your post.</Text>
             </View>
           </View>
         ))}

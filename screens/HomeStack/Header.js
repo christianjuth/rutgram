@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
     elevation: 0,
     marginTop: Constants.statusBarHeight,
     height: 56,
-    borderBottomWidth: 0.5,
-    borderColor: '#aaa'
+    borderBottomWidth: 1,
+    borderColor: '#ddd'
   },
 
   logoWrap: {

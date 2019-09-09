@@ -11,8 +11,10 @@ import thunk from 'redux-thunk';
 import { Provider, connect } from 'react-redux';
 import reducer, { initialState } from './reducer';
 
-import AuthLoadingScreen from './screens/Auth/AuthLoadingScreen';
+import AuthLoadingScreen from './screens/Auth/AuthScreen';
 const store = createStore(reducer, initialState, applyMiddleware(thunk));
+
+global.endpoint = 'https://api-useast.graphcms.com/v1/ck041h6kf0eri01bx3rtqe0du/master';
 
 const theme = {
   ...DefaultTheme,
@@ -56,14 +58,6 @@ export default function App(props) {
       />
     );
   }
-
-  // else if(!state.profileId) {
-  //   return(
-  //     <Provider store={store}>
-  //       <AuthLoadingScreen/>
-  //     </Provider>
-  //   );
-  // }
 
   else {
     return (

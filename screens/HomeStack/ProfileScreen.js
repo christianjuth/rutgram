@@ -1,34 +1,23 @@
 import React from 'react';
-import { View, AsyncStorage, ActivityIndicator, StyleSheet, Text, ScrollView, RefreshControl, TouchableOpacity } from 'react-native';
+import { View, AsyncStorage, ActivityIndicator, StyleSheet, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { Avatar, Appbar } from 'react-native-paper';
 import { refreshProfile, RESET } from '../../actions';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '../../components/StyledButton';
 import Image from '../../components/Image'
+import { request } from 'graphql-request';
 
 class SettingsScreen extends React.PureComponent{
   static navigationOptions = ({ navigation }) => {
     return {
-      headerRight: (
-        <Appbar.Action icon="settings" onPress={() => {
-          navigation.navigate('Settings');
-        }}/>
-      ),
+      title: navigation.state.params.profile.displayName,
       showBorder: false
     };
   }
 
-  componentWillReceiveProps(newProps) {
-    if(newProps.profile != this.props.profile)
-      this.updateHeader(newProps)
-  }
-
-  updateHeader(props = this.props) {
-    if(!props.profile) return;
-    this.props.navigation.setParams({
-      title: props.profile.username
-    });
+  state = {
+    profile: {}
   }
 
   componentDidMount() {
@@ -38,8 +27,51 @@ class SettingsScreen extends React.PureComponent{
   refresh() {
     // prevent double refresh
     if(this.props.refreshing) return;
+    let profileId = this.props.navigation.state.params.profile.id;
     // begin refresh
-    this.props.dispatch(refreshProfile());
+    const query = `{
+      profile(where: { id: "${profileId}" }){
+        username
+        displayName
+        bio
+        followers{
+          fan{
+            id
+            username
+          }
+        }
+        following{
+          fan{
+            id
+            username
+          }
+        }
+        posts(orderBy: createdAt_DESC){
+          id
+          location
+          caption
+          likes{
+            profile{
+              id
+              username
+            }
+          }
+          profile{
+            displayName
+          }
+          image{
+            url
+          }
+        }
+      }
+    }`;
+
+    request(global.endpoint, query)
+    .then(data => {
+      this.setState({
+        profile: data.profile
+      });
+    });
   }
 
   viewPost(post) {
@@ -47,22 +79,13 @@ class SettingsScreen extends React.PureComponent{
   }
 
   render() {
-    if(!this.props.profile || !this.props.profile.username)
+    if(!this.state.profile.username)
       return(<ActivityIndicator color="#000" style={{flex: 1}}/>);
 
-    let { profile } = this.props;
+    let { profile } = this.state;
 
     return(
-      <ScrollView
-        style={styles.container}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl
-            refreshing={this.props.refreshing}
-            onRefresh={this.refresh.bind(this)}
-          />
-        }
-      >
+      <ScrollView style={styles.container}>
         <View style={styles.header}>
           <View style={styles.stats}>
             <Avatar.Image size={70} source={require('../../assets/rutgers-avatar.png')}/>
@@ -82,7 +105,7 @@ class SettingsScreen extends React.PureComponent{
           <Text style={styles.bold}>{profile.displayName}</Text>
           <Text>{profile.bio}</Text>
           <View style={styles.spacer}/>
-          <Button mode='outlined'>Edit Profile</Button>
+          <Button>Follow</Button>
         </View>
 
         <View style={styles.posts}>
@@ -104,8 +127,7 @@ class SettingsScreen extends React.PureComponent{
 
 const mapStateToProps = state => {
   return ({
-    refreshing: state.profileLoading,
-    profile: state.profile
+    profileId: state.profileId
   });
 }
 

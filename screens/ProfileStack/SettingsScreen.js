@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, AsyncStorage, ActivityIndicator } from 'react-native';
+import { View, AsyncStorage, ActivityIndicator, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { Avatar } from 'react-native-paper';
 import { refreshProfile, RESET } from '../../actions';
@@ -33,10 +33,8 @@ class SettingsScreen extends React.PureComponent{
       return(<ActivityIndicator color="#000" style={{flex: 1}}/>);
 
     return(
-      <View style={{flex: 1, padding: 10}}>
-        <Button style={{elevation: 0}} color='#3798f0' dark={true} mode="contained" onPress={this._signOutAsync}>
-          Sign out
-        </Button>
+      <View style={styles.container}>
+        <Button mode='outlined' onPress={this._signOutAsync}>Sign out</Button>
       </View>
     );
   }
@@ -50,3 +48,11 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps)(SettingsScreen);
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#f6f6f6',
+    flex: 1,
+    padding: 10
+  }
+});

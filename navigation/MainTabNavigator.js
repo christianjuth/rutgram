@@ -11,6 +11,7 @@ import Icon from '../components/Icon';
 
 // home stack
 import HomeScreen from '../screens/HomeStack/HomeScreen';
+import HomeProfileScreen from '../screens/HomeStack/ProfileScreen';
 // search stack
 import SearchScreen from '../screens/SearchScreen';
 // camera stack
@@ -21,6 +22,8 @@ import YouScreen from '../screens/LikesStack/YouScreen';
 // profiles stack
 import ProfileScreen from '../screens/ProfileStack/ProfileScreen';
 import SettingsScreen from '../screens/ProfileStack/SettingsScreen';
+
+import PostScreen from '../screens/Post';
 
 
 const config = {
@@ -61,7 +64,7 @@ const config = {
     // the official instagram app
     indicatorStyle: {
       backgroundColor: 'transparent',
-      borderTopWidth: 1,
+      borderBottomWidth: 1,
       borderColor: '#000'
     }
   }
@@ -70,7 +73,7 @@ const config = {
 const styles = StyleSheet.create({
   header: {
     elevation: 0,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 1,
     borderColor: '#aaa'
   },
   header: {
@@ -86,9 +89,13 @@ const HomeStack = createStackNavigator({
     screen: HomeScreen,
     path: '',
   },
-  Camera: {
-    screen: CameraScreen,
-    path: 'camera'
+  Profile: {
+    screen: HomeProfileScreen,
+    path: 'profile'
+  },
+  Post: {
+    screen: PostScreen,
+    path: ''
   }
 }, config);
 HomeStack.navigationOptions = {
@@ -158,6 +165,10 @@ const ProfileStack = createStackNavigator({
   Settings: {
     screen: SettingsScreen,
     path: 'settings'
+  },
+  Post: {
+    screen: PostScreen,
+    path: ''
   }
 }, config);
 ProfileStack.navigationOptions = ({ navigation }) => ({

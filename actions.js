@@ -20,38 +20,53 @@ export function refreshFeed() {
       type: FEED_LOADING
     });
 
+    let state = getState();
+
     const query = `{
-      posts(first: 50, orderBy: createdAt_DESC){
-        id
-        location
-        caption
-        likes{
-          profile{
-            username
+      profile(where: { id: "${state.profileId}" }){
+        following{
+    			celebrity{
+            posts(first: 5){
+              id
+              location
+              caption
+              likes{
+                profile{
+                  id
+                  username
+                }
+              }
+              profile{
+                id
+                displayName
+              }
+              image{
+                url
+              }
+            }
           }
-        }
-        profile{
-          displayName
-        }
-        image{
-          url
         }
       }
     }`;
 
     graphQLClient.request(query)
     .then(data => {
+      let posts = [];
+      data.profile.following.forEach(f => {
+        posts.push(...f.celebrity.posts);
+      });
+
       // mark which posts
       // app user has liked
-      data.posts.forEach(post => {
-        post.liked = post.likes.map(l => l.profile.username).includes('rudots');
+      posts.forEach(post => {
+        post.liked = post.likes.map(l => l.profile.id).includes(state.profileId);
         post.likeCount = post.likes.length;
         if(post.liked) post.likeCount--;
       });
 
       dispatch({
         type: FEED_LOADED,
-        payload: data.posts
+        payload: posts
       });
     });
   };
@@ -114,8 +129,34 @@ export function refreshProfile() {
         username
         displayName
         bio
-        posts{
+        followers{
+          fan{
+            id
+            username
+          }
+        }
+        following{
+          fan{
+            id
+            username
+          }
+        }
+        posts(orderBy: createdAt_DESC){
           id
+          location
+          caption
+          likes{
+            profile{
+              id
+              username
+            }
+          }
+          profile{
+            displayName
+          }
+          image{
+            url
+          }
         }
       }
     }`;
