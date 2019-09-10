@@ -24,11 +24,13 @@ function ProfileScreen(props) {
     props.dispatch(refreshProfile());
   }
 
+  // componentDidMount
   useEffect(() => {
     refresh();
   }, []);
 
   // update navigation header
+  // when profile changes
   useEffect(() => {
     if(!props.profile) return;
     props.navigation.setParams({
