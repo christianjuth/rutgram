@@ -103,6 +103,14 @@ export function refreshLikes() {
         id
         profile{
           username
+          profilePicture{
+            url
+          }
+        }
+        post{
+          image{
+            url
+          }
         }
       }
     }`;

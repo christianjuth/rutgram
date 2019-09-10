@@ -2,8 +2,6 @@ import React from 'react';
 import { Image, TouchableOpacity, View, StyleSheet } from 'react-native';
 
 
-
-
 export default (props) => {
 
   let icons = {

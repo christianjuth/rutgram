@@ -17,7 +17,7 @@ import Header from './Header';
 import Avatar from '../../components/Avatar';
 
 
-class Home extends React.Component{
+class Home extends React.PureComponent{
   static navigationOptions = {
     header: ({ navigation }) => (<Header navigation={navigation}/>)
   };

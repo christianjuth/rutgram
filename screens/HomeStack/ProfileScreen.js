@@ -1,3 +1,11 @@
+/*
+ * File: ProfileScreen.js
+ * Author: Christian Juth
+ * Description:
+ *   The profile screen for any user
+ * State: component state
+ */
+
 import React from 'react';
 import { View, AsyncStorage, ActivityIndicator, StyleSheet, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
@@ -9,7 +17,7 @@ import Image from '../../components/Image'
 import { request } from 'graphql-request';
 import Avatar from '../../components/Avatar';
 
-class SettingsScreen extends React.PureComponent{
+class ProfileScreen extends React.PureComponent{
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.state.params.profile.displayName,
@@ -139,8 +147,7 @@ const mapStateToProps = state => {
   });
 }
 
-export default connect(mapStateToProps)(SettingsScreen);
-
+export default connect(mapStateToProps)(ProfileScreen);
 
 const styles = StyleSheet.create({
 

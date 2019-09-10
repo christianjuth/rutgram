@@ -27,6 +27,9 @@ export default class SettingsScreen extends React.Component{
         id
         username
         displayName
+        profilePicture{
+          url
+        }
       }
     }`;
 
@@ -67,7 +70,7 @@ export default class SettingsScreen extends React.Component{
         <View style={{flex: 1}}>
           {this.state.results.map(r => (
             <View key={r.id} style={styles.row}>
-              <Avatar.Image size={40} style={styles.avatar} source={require('../assets/rutgers-avatar.png')} />
+              <Avatar.Image size={40} style={styles.avatar} source={{uri: r.profilePicture.url}}/>
               <View>
                 <Text style={styles.bold}>{r.username}</Text>
                 <Text>{r.displayName}</Text>

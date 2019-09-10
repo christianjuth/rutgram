@@ -15,7 +15,7 @@ class Welcome extends React.Component {
 ```
 
 **Why should I use functional components?**
-1. Functional component are much easier to read and test because they are plain JavaScript functions without state or lifecycle-hooks
+1. Functional component are much easier to read and test because they are plain JavaScript functions
 2. You end up with less code
 3. The React team mentioned that there may be a performance boost for functional component in future React versions
 
