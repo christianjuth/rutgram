@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, AsyncStorage, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, AsyncStorage, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { Avatar } from 'react-native-paper';
-import { refreshProfile, RESET } from '../../actions';
+import { RESET } from '../../actions';
 import Button from '../../components/StyledButton';
 
 class SettingsScreen extends React.PureComponent{
@@ -31,7 +30,7 @@ const mapStateToProps = state => {
     refreshing: state.profileLoading,
     profile: state.profile
   });
-}
+};
 
 export default connect(mapStateToProps)(SettingsScreen);
 

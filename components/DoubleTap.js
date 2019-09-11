@@ -47,7 +47,7 @@ export default class DoubleTap extends React.Component{
         </View>
         {this.props.children}
       </TouchableOpacity>
-    )
+    );
   }
 }
 

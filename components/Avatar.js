@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Avatar } from 'react-native-paper';
+import { Avatar as PaperAvatar } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default (props) => {
+export default function Avatar(props) {
 
   let createCircleStyle = (size) => {
     return {
@@ -11,7 +11,7 @@ export default (props) => {
       width: size,
       borderRadius: size/2
     };
-  }
+  };
 
   let size = props.size || 50,
       spacerSize = size * 1.08,
@@ -23,7 +23,7 @@ export default (props) => {
       style={[styles.gradient, createCircleStyle(gradientSize)]}
     >
       <View style={[styles.spacer, createCircleStyle(spacerSize)]}>
-        <Avatar.Image {...props} size={size}/>
+        <PaperAvatar.Image {...props} size={size}/>
       </View>
     </LinearGradient>
 

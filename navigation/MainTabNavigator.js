@@ -1,9 +1,8 @@
 import React from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator, createBottomTabNavigator } from 'react-navigation-tabs';
-import { Appbar, DefaultTheme, Provider as PaperProvider, Avatar, BottomNavigation, ActivityIndicator } from 'react-native-paper';
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { Appbar } from 'react-native-paper';
 import Constants from 'expo-constants';
 
 import Icon from '../components/Icon';

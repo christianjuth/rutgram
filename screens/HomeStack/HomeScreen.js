@@ -5,7 +5,6 @@ import {
   View,
   RefreshControl,
   ScrollView,
-  Image,
   ActivityIndicator
 } from 'react-native';
 import DoubleTap from '../../components/DoubleTap';

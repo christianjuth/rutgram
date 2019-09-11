@@ -4,8 +4,6 @@ import {
   Text,
   View,
   ScrollView,
-  Image,
-  ActivityIndicator,
   AppState
 } from 'react-native';
 import DoubleTap from '../components/DoubleTap';

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 
-export default (props) => {
+export default function StyledButton(props) {
   return(
     <Button
       mode='contained'

@@ -52,7 +52,7 @@ const mapStateToProps = state => {
     likes: state.likes,
     refreshing: state.likesLoading
   });
-}
+};
 
 export default connect(mapStateToProps)(LikesScreen);
 

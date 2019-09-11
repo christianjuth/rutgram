@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, TouchableOpacity, View, StyleSheet } from 'react-native';
 
 
-export default (props) => {
+export default function Icon(props) {
 
   let icons = {
     'person':   require('../assets/icons/person.png'),
@@ -17,7 +17,7 @@ export default (props) => {
     'home':   require('../assets/icons/home.png'),
     'home-o':   require('../assets/icons/home-o.png'),
     'message-o':   require('../assets/icons/message-o.png'),
-  }
+  };
 
   // adjust to match expo icons
   let size = props.size + 2,

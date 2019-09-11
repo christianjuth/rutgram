@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, StatusBar, StyleSheet, SafeAreaView } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 export default class CameraExample extends React.Component {

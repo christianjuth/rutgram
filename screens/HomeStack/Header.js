@@ -21,7 +21,7 @@ let Header = (props) => {
       </Appbar>
     </View>
   );
-}
+};
 
 export default withTheme(Header);
 

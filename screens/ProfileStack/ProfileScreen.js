@@ -7,13 +7,13 @@
  */
 
 import React, { useEffect } from 'react';
-import { View, AsyncStorage, ActivityIndicator, StyleSheet, Text, ScrollView, RefreshControl, TouchableOpacity } from 'react-native';
+import { StyleSheet, ActivityIndicator, ScrollView, RefreshControl, View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import { refreshProfile } from '../../actions';
 import { Appbar } from 'react-native-paper';
-import { refreshProfile, RESET } from '../../actions';
+import Avatar from '../../components/Avatar';
 import Button from '../../components/StyledButton';
 import Image from '../../components/Image';
-import Avatar from '../../components/Avatar';
 
 function ProfileScreen(props) {
 
@@ -36,7 +36,7 @@ function ProfileScreen(props) {
     props.navigation.setParams({
       title: props.profile.username
     });
-  }, [props.profile])
+  }, [props.profile]);
 
   function viewPost(post) {
     props.navigation.navigate('Post', { post });
@@ -104,7 +104,7 @@ ProfileScreen.navigationOptions = ({ navigation }) => {
     ),
     showBorder: false
   };
-}
+};
 
 const mapStateToProps = state => {
   return ({
@@ -112,7 +112,7 @@ const mapStateToProps = state => {
     loading: state.profileLoading,
     refreshing: state.profileRefreshing
   });
-}
+};
 
 export default connect(mapStateToProps)(ProfileScreen);
 

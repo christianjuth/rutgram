@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, AsyncStorage, TextInput, Image, StyleSheet, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
+import { AsyncStorage, TextInput, Image, StyleSheet, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
 import { request } from 'graphql-request';
 import { connect } from 'react-redux';
 import { SET_PROFILE_ID } from '../actions';
@@ -102,7 +102,7 @@ const mapStateToProps = state => {
   return ({
     profileId: state.profileId
   });
-}
+};
 
 export default connect(mapStateToProps)(SignInScreen);
 
