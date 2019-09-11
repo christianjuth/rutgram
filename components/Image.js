@@ -1,9 +1,9 @@
-import React from 'react';
-import { Image, View } from 'react-native';
+import React, { Fragment } from 'react';
+import { Image } from 'react-native';
 
-export default function StyledImage(props) {
+function StyledImage(props) {
   return(
-    <View>
+    <Fragment>
       <Image
         {...props}
         style={{width: '100%', paddingTop: '100%', position: 'absolute'}}
@@ -15,6 +15,8 @@ export default function StyledImage(props) {
         style={{width: '100%', paddingTop: '100%'}}
         resizeMode='contain'
       />
-    </View>
+    </Fragment>
   );
 }
+
+export default StyledImage;

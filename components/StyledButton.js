@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 
-export default function StyledButton(props) {
+function StyledButton(props) {
   return(
     <Button
       mode='contained'
@@ -13,6 +14,12 @@ export default function StyledButton(props) {
       uppercase={false}
     >{props.children}</Button>
   );
+}
+
+StyledButton.propTypes = {
+  mode: PropTypes.string,
+  style: PropTypes.object,
+  children: PropTypes.node
 };
 
 const styles = StyleSheet.create({
@@ -20,3 +27,5 @@ const styles = StyleSheet.create({
     elevation: 0
   }
 });
+
+export default StyledButton;

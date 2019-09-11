@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { TouchableOpacity, StyleSheet, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default class DoubleTap extends React.Component{
+class DoubleTap extends React.Component{
   static defaultProps = {
     onDoubleTap: () => {}
   }
@@ -51,6 +52,11 @@ export default class DoubleTap extends React.Component{
   }
 }
 
+DoubleTap.propTypes = {
+  children: PropTypes.node,
+  onDoubleTap: PropTypes.func
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -77,3 +83,6 @@ const styles = StyleSheet.create({
     display: 'none'
   }
 });
+
+
+export default DoubleTap;

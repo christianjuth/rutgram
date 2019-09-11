@@ -1,10 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, StyleSheet } from 'react-native';
 import { Avatar as PaperAvatar } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function Avatar(props) {
-
+function Avatar(props) {
   let createCircleStyle = (size) => {
     return {
       height: size,
@@ -30,6 +30,10 @@ export default function Avatar(props) {
   );
 }
 
+Avatar.propTypes = {
+  size: PropTypes.number
+};
+
 const styles = StyleSheet.create({
   gradient: {
     alignItems: 'center',
@@ -42,3 +46,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   }
 });
+
+export default Avatar;

@@ -1,4 +1,4 @@
-import { request, GraphQLClient } from 'graphql-request';
+import { GraphQLClient } from 'graphql-request';
 
 const endpoint = 'https://api-useast.graphcms.com/v1/ck041h6kf0eri01bx3rtqe0du/master';
 const graphQLClient = new GraphQLClient(endpoint, {});

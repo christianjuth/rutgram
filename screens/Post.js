@@ -1,16 +1,11 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  AppState
-} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, AppState } from 'react-native';
 import DoubleTap from '../components/DoubleTap';
 import PostImage from '../components/Image';
 import { connect } from 'react-redux';
 import Icon from '../components/Icon';
 import Avatar from '../components/Avatar';
+import { navPropTypes } from '../propTypes';
 
 class Post extends React.Component{
   static navigationOptions = {
@@ -84,13 +79,15 @@ class Post extends React.Component{
   }
 }
 
+Post.propTypes = {
+  ...navPropTypes
+};
+
 const mapStateToProps = state => {
   return ({
     profileId: state.profileId
   });
-}
-
-export default connect(mapStateToProps)(Post);
+};
 
 const styles = StyleSheet.create({
   p: {
@@ -115,3 +112,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
+export default connect(mapStateToProps)(Post);

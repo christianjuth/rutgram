@@ -11,7 +11,8 @@ import DoubleTap from '../../components/DoubleTap';
 import PostImage from '../../components/Image';
 import { connect } from 'react-redux';
 import Icon from '../../components/Icon';
-import { FEED_UPDATE, refreshFeed } from '../../actions';
+import { FEED_UPDATE, refreshFeed } from '../../redux/actions';
+import { reduxPropTypes } from '../../propTypes';
 import Header from './Header';
 import Avatar from '../../components/Avatar';
 
@@ -91,15 +92,17 @@ class Home extends React.PureComponent{
   }
 }
 
+Home.propTypes = {
+  ...reduxPropTypes
+};
+
 const mapStateToProps = state => {
   return ({
     feed: state.feed,
     loading: state.feedLoaded,
     refreshing: state.feedRefreshing
   });
-}
-
-export default connect(mapStateToProps)(Home);
+};
 
 const styles = StyleSheet.create({
   p: {
@@ -124,3 +127,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
+export default connect(mapStateToProps)(Home);

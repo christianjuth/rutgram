@@ -6,10 +6,16 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "lint": "eslint ./App.js screens/** components/**"
   },
   "jest": {
     "preset": "jest-expo"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.3",
@@ -41,6 +47,7 @@
     "babel-preset-expo": "^6.0.0",
     "eslint": "^6.3.0",
     "eslint-plugin-react": "^7.14.3",
+    "husky": "^3.0.5",
     "jest-expo": "^34.0.0"
   },
   "private": true

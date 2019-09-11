@@ -1,13 +1,14 @@
 import React from 'react';
 import { AsyncStorage, TextInput, Image, StyleSheet, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
+import Button from '../components/StyledButton';
 import { request } from 'graphql-request';
 import { connect } from 'react-redux';
-import { SET_PROFILE_ID } from '../actions';
-import Button from '../components/StyledButton';
+import { SET_PROFILE_ID } from '../redux/actions';
+import { reduxPropTypes } from '../propTypes';
 
 const endpoint = 'https://api-useast.graphcms.com/v1/ck041h6kf0eri01bx3rtqe0du/master';
 
-class SignInScreen extends React.Component {
+class AuthScreen extends React.Component {
   state = {
     username: '',
     loading: true
@@ -65,8 +66,6 @@ class SignInScreen extends React.Component {
     this.setState({ username });
   }
 
-
-
   render() {
 
     if(this.state.loading){
@@ -98,13 +97,15 @@ class SignInScreen extends React.Component {
   }
 }
 
+AuthScreen.propTypes = {
+  ...reduxPropTypes
+};
+
 const mapStateToProps = state => {
   return ({
     profileId: state.profileId
   });
 };
-
-export default connect(mapStateToProps)(SignInScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -130,3 +131,5 @@ const styles = StyleSheet.create({
     marginBottom: 10
   }
 });
+
+export default connect(mapStateToProps)(AuthScreen);

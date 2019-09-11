@@ -1,10 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, View, Image } from 'react-native';
 import { Appbar, withTheme } from 'react-native-paper';
 import Constants from 'expo-constants';
 
-
-let Header = (props) => {
+function Header(props) {
   const { colors } = props.theme;
   return(
     <View style={{backgroundColor: colors.primary}}>
@@ -21,10 +21,11 @@ let Header = (props) => {
       </Appbar>
     </View>
   );
+}
+
+Header.propTypes = {
+  theme: PropTypes.object
 };
-
-export default withTheme(Header);
-
 
 const styles = StyleSheet.create({
   header: {
@@ -45,3 +46,5 @@ const styles = StyleSheet.create({
     height: 60
   }
 });
+
+export default withTheme(Header);

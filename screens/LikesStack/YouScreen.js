@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { View, ScrollView, Text, StyleSheet, RefreshControl, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { Avatar } from 'react-native-paper';
-import { refreshLikes } from '../../actions';
+import { refreshLikes } from '../../redux/actions';
+import { reduxPropTypes } from '../../propTypes';
 import Image from '../../components/Image';
 
 
@@ -54,7 +56,11 @@ const mapStateToProps = state => {
   });
 };
 
-export default connect(mapStateToProps)(LikesScreen);
+LikesScreen.propTypes = {
+  ...reduxPropTypes,
+  refreshing: PropTypes.bool,
+  likes: PropTypes.array
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -82,3 +88,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   }
 });
+
+export default connect(mapStateToProps)(LikesScreen);

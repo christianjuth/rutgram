@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Image, TouchableOpacity, View, StyleSheet } from 'react-native';
 
-
-export default function Icon(props) {
+function Icon(props) {
 
   let icons = {
     'person':   require('../assets/icons/person.png'),
@@ -36,6 +36,13 @@ export default function Icon(props) {
   );
 }
 
+Icon.propTypes = {
+  name: PropTypes.string,
+  onPress: PropTypes.func,
+  style: PropTypes.object,
+  size: PropTypes.number
+};
+
 const styles = StyleSheet.create({
   iconWrap: {
     alignItems: 'center',
@@ -48,3 +55,5 @@ const styles = StyleSheet.create({
     width: '100%'
   }
 });
+
+export default Icon;

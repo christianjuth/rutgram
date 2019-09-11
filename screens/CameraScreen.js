@@ -3,9 +3,10 @@ import { Text, View, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-na
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { MaterialIcons } from '@expo/vector-icons';
+import { navPropTypes } from '../propTypes';
 
 
-export default class CameraExample extends React.Component {
+class CameraScreen extends React.Component {
   static navigationOptions = {
     header: null
   }
@@ -19,13 +20,6 @@ export default class CameraExample extends React.Component {
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
-  }
-
-  async fixImage(image) {
-    let data = await ImageManipulator.manipulateAsync(image, []);
-    this.props.navigation.navigate('CapturedImage', {
-      image: data
-    });
   }
 
   flip() {
@@ -104,6 +98,10 @@ export default class CameraExample extends React.Component {
   }
 }
 
+CameraScreen.propTypes = {
+  ...navPropTypes
+};
+
 const styles = StyleSheet.create({
 
   noCameraWrap: {
@@ -142,3 +140,5 @@ const styles = StyleSheet.create({
     height: 80
   }
 });
+
+export default CameraScreen;

@@ -7,6 +7,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, ActivityIndicator, ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { request } from 'graphql-request';
@@ -135,13 +136,16 @@ ProfileScreen.navigationOptions = ({ navigation }) => {
   };
 };
 
+ProfileScreen.propTypes = {
+  refreshing: PropTypes.bool,
+  navigation: PropTypes.object
+};
+
 const mapStateToProps = state => {
   return ({
     profileId: state.profileId
   });
 };
-
-export default connect(mapStateToProps)(ProfileScreen);
 
 const styles = StyleSheet.create({
 
@@ -184,3 +188,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   }
 });
+
+export default connect(mapStateToProps)(ProfileScreen);

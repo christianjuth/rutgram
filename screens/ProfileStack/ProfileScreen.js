@@ -7,13 +7,16 @@
  */
 
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, ActivityIndicator, ScrollView, RefreshControl, View, Text, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
-import { refreshProfile } from '../../actions';
 import { Appbar } from 'react-native-paper';
 import Avatar from '../../components/Avatar';
 import Button from '../../components/StyledButton';
 import Image from '../../components/Image';
+import { connect } from 'react-redux';
+import { refreshProfile } from '../../redux/actions';
+import { reduxPropTypes, navPropTypes } from '../../propTypes';
+
 
 function ProfileScreen(props) {
 
@@ -95,6 +98,7 @@ function ProfileScreen(props) {
     </ScrollView>
   );
 }
+
 ProfileScreen.navigationOptions = ({ navigation }) => {
   return {
     headerRight: (
@@ -106,6 +110,14 @@ ProfileScreen.navigationOptions = ({ navigation }) => {
   };
 };
 
+ProfileScreen.propTypes = {
+  ...reduxPropTypes,
+  ...navPropTypes,
+  profile: PropTypes.object,
+  loading: PropTypes.bool,
+  refreshing: PropTypes.bool
+};
+
 const mapStateToProps = state => {
   return ({
     profile: state.profile,
@@ -113,8 +125,6 @@ const mapStateToProps = state => {
     refreshing: state.profileRefreshing
   });
 };
-
-export default connect(mapStateToProps)(ProfileScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -156,3 +166,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   }
 });
+
+export default connect(mapStateToProps)(ProfileScreen);

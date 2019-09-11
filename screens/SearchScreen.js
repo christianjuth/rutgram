@@ -11,7 +11,7 @@ export default class SettingsScreen extends React.Component{
     super(props);
     this.state = {
       results: []
-    }
+    };
     this.onChangeText = this.onChangeText.bind(this);
   }
 

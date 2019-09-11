@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { reduxPropTypes } from '../../propTypes';
 import { View, AsyncStorage, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { RESET } from '../../actions';
+import { RESET } from '../../redux/actions';
 import Button from '../../components/StyledButton';
 
 class SettingsScreen extends React.PureComponent{
@@ -25,14 +27,17 @@ class SettingsScreen extends React.PureComponent{
   }
 }
 
+SettingsScreen.propTypes = {
+  ...reduxPropTypes,
+  navigation: PropTypes.object
+};
+
 const mapStateToProps = state => {
   return ({
     refreshing: state.profileLoading,
     profile: state.profile
   });
 };
-
-export default connect(mapStateToProps)(SettingsScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -41,3 +46,5 @@ const styles = StyleSheet.create({
     padding: 10
   }
 });
+
+export default connect(mapStateToProps)(SettingsScreen);

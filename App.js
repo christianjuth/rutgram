@@ -1,17 +1,13 @@
 import { AppLoading } from 'expo';
 import React, { useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
-import { Appbar, DefaultTheme, Provider as PaperProvider, Avatar, BottomNavigation, ActivityIndicator } from 'react-native-paper';
-import Constants from 'expo-constants';
-import { withNavigation } from 'react-navigation';
-
-import AppNavigator from './navigation/AppNavigator';
+import { StyleSheet, View } from 'react-native';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import { Provider, connect } from 'react-redux';
-import reducer, { initialState } from './reducer';
+import { Provider } from 'react-redux';
+import reducer, { initialState } from './redux/reducer';
 
-import AuthScreen from './screens/AuthScreen';
+import WithAuth from './screens/WithAuth';
 const store = createStore(reducer, initialState, applyMiddleware(thunk));
 
 global.endpoint = 'https://api-useast.graphcms.com/v1/ck041h6kf0eri01bx3rtqe0du/master';
@@ -25,29 +21,8 @@ const theme = {
   }
 };
 
-class WithAuth extends React.Component{
-  render() {
-    if(!this.props.profileId){
-      return(
-        <AuthScreen/>
-      );
-    }
-
-    return(
-      <AppNavigator/>
-    );
-  }
-}
-const mapStateToProps = state => {
-  return ({
-    profileId: state.profileId
-  });
-}
-WithAuth = connect(mapStateToProps)(WithAuth)
-
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
-  let state = store.getState();
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
