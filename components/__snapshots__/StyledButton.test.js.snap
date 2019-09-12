@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`blue button renders correctly 1`] = `
+exports[`<StyledButton /> blue button renders correctly 1`] = `
 <View
   style={
     Object {
@@ -83,7 +83,7 @@ exports[`blue button renders correctly 1`] = `
 </View>
 `;
 
-exports[`outline button renders correctly 1`] = `
+exports[`<StyledButton /> outline button renders correctly 1`] = `
 <View
   style={
     Object {

@@ -4,6 +4,7 @@ import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { MaterialIcons } from '@expo/vector-icons';
 import { navPropTypes } from '../propTypes';
+import Constants from 'expo-constants';
 
 
 class CameraScreen extends React.Component {
@@ -23,12 +24,16 @@ class CameraScreen extends React.Component {
 
     this.listener1 = this.props.navigation.addListener(
       'willBlur',
-      () => this.camera.pausePreview()
+      () => {
+        if(Constants.isDevice) this.camera.pausePreview();
+      }
     );
 
     this.listener2 = this.props.navigation.addListener(
       'willFocus',
-      () => this.camera.resumePreview()
+      () => {
+        if(Constants.isDevice) this.camera.resumePreview();
+      }
     );
   }
 
@@ -137,7 +142,6 @@ const styles = StyleSheet.create({
   cameraControlsTop: {
     flex: 1,
     padding: '5%',
-    paddingTop: 0,
     flexDirection: 'row'
   },
 

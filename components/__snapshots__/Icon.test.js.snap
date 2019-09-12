@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DoubleTap /> renders correctly 1`] = `
+<View
+  activeOpacity={0.7}
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "justifyContent": "center",
+      },
+      Object {
+        "height": NaN,
+        "width": NaN,
+      },
+      undefined,
+    ]
+  }
+>
+  <Image
+    resizeMode="contain"
+    source={1}
+    style={
+      Object {
+        "flex": 1,
+        "height": "100%",
+        "width": "100%",
+      }
+    }
+  />
+</View>
+`;

@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Image /> renders correctly 1`] = `
+Array [
+  <Image
+    blurRadius={30}
+    resizeMode="cover"
+    srouce={
+      Object {
+        "uri": "",
+      }
+    }
+    style={
+      Object {
+        "paddingTop": "100%",
+        "position": "absolute",
+        "width": "100%",
+      }
+    }
+  />,
+  <Image
+    resizeMode="contain"
+    srouce={
+      Object {
+        "uri": "",
+      }
+    }
+    style={
+      Object {
+        "paddingTop": "100%",
+        "width": "100%",
+      }
+    }
+  />,
+]
+`;
