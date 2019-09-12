@@ -20,6 +20,21 @@ class CameraScreen extends React.Component {
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
+
+    this.listener1 = this.props.navigation.addListener(
+      'willBlur',
+      () => this.camera.pausePreview()
+    );
+
+    this.listener2 = this.props.navigation.addListener(
+      'willFocus',
+      () => this.camera.resumePreview()
+    );
+  }
+
+  componentWillUnmound() {
+    this.listener1.remove();
+    this.listener2.remove();
   }
 
   flip() {
@@ -59,7 +74,7 @@ class CameraScreen extends React.Component {
     }
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#000' }}>
         <Camera
           style={{ flex: 1 }}
           type={this.state.type}

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Avatar as PaperAvatar } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -18,20 +18,25 @@ function Avatar(props) {
       gradientSize = size * 1.15;
 
   return(
-    <LinearGradient
-      colors={['#12C2E9', '#C471ED', '#F64F59']}
-      style={[styles.gradient, createCircleStyle(gradientSize)]}
+    <TouchableOpacity
+      onPress={props.onPress}
+      activeOpacity={1}
     >
-      <View style={[styles.spacer, createCircleStyle(spacerSize)]}>
-        <PaperAvatar.Image {...props} size={size}/>
-      </View>
-    </LinearGradient>
-
+      <LinearGradient
+        colors={['#12C2E9', '#C471ED', '#F64F59']}
+        style={[styles.gradient, createCircleStyle(gradientSize)]}
+      >
+        <View style={[styles.spacer, createCircleStyle(spacerSize)]}>
+          <PaperAvatar.Image {...props} size={size}/>
+        </View>
+      </LinearGradient>
+    </TouchableOpacity>
   );
 }
 
 Avatar.propTypes = {
-  size: PropTypes.number
+  size: PropTypes.number,
+  onPress: PropTypes.func
 };
 
 const styles = StyleSheet.create({

@@ -7,7 +7,8 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --watchAll",
-    "lint": "eslint ./App.js screens/**/*.js components/**/*.js"
+    "lint": "eslint ./App.js screens/**/*.js components/**/*.js",
+    "electron": "cd electron && npm start"
   },
   "jest": {
     "preset": "jest-expo"
