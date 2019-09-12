@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<ViewManagerAdapter_ExpoLinearGradient
+  proxiedProperties={
+    Object {
+      "colors": Array [
+        4279419625,
+        4291064301,
+        4294332249,
+      ],
+      "endPoint": undefined,
+      "locations": undefined,
+      "startPoint": undefined,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "justifyContent": "center",
+      },
+      Object {
+        "borderRadius": 23,
+        "height": 46,
+        "width": 46,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#fff",
+          "justifyContent": "center",
+        },
+        Object {
+          "borderRadius": 21.6,
+          "height": 43.2,
+          "width": 43.2,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#6200ee",
+            "borderRadius": 20,
+            "height": 40,
+            "width": 40,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Image
+        style={
+          Object {
+            "borderRadius": 20,
+            "height": 40,
+            "width": 40,
+          }
+        }
+      />
+    </View>
+  </View>
+</ViewManagerAdapter_ExpoLinearGradient>
+`;

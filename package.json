@@ -7,14 +7,14 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --watchAll",
-    "lint": "eslint ./App.js screens/** components/**"
+    "lint": "eslint ./App.js screens/**/*.js components/**/*.js"
   },
   "jest": {
     "preset": "jest-expo"
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint"
+      "pre-push": "jest && npm run lint"
     }
   },
   "dependencies": {
@@ -45,7 +45,10 @@
   "devDependencies": {
     "babel-eslint": "^10.0.3",
     "babel-preset-expo": "^6.0.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
     "eslint": "^6.3.0",
+    "eslint-plugin-jest": "^22.17.0",
     "eslint-plugin-react": "^7.14.3",
     "husky": "^3.0.5",
     "jest-expo": "^34.0.0"
