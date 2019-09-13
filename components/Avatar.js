@@ -17,17 +17,20 @@ function Avatar(props) {
       spacerSize = size * 1.08,
       gradientSize = size * 1.15;
 
+  let colors = props.onPress ? ['#12C2E9', '#C471ED', '#F64F59'] : size >= 50 ? ['#ccc', '#ccc'] : ['transparent'];
+
   return(
     <TouchableOpacity
       onPress={props.onPress}
       activeOpacity={1}
+      style={props.style}
     >
       <LinearGradient
-        colors={['#12C2E9', '#C471ED', '#F64F59']}
+        colors={colors}
         style={[styles.gradient, createCircleStyle(gradientSize)]}
       >
         <View style={[styles.spacer, createCircleStyle(spacerSize)]}>
-          <PaperAvatar.Image {...props} size={size}/>
+          <PaperAvatar.Image {...props} size={size} style={null}/>
         </View>
       </LinearGradient>
     </TouchableOpacity>
@@ -36,7 +39,8 @@ function Avatar(props) {
 
 Avatar.propTypes = {
   size: PropTypes.number,
-  onPress: PropTypes.func
+  onPress: PropTypes.func,
+  style: PropTypes.object
 };
 
 const styles = StyleSheet.create({

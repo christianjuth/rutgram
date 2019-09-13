@@ -35,10 +35,10 @@ class Home extends React.PureComponent{
 
   like(i, value) {
     let { feed } = this.props;
-    feed = feed.slice();
+    feed = Object.assign({}, feed);
     if(typeof value === 'undefined')
-      value = !feed[i].liked;
-    feed[i].liked = value;
+      value = !feed.posts[i].liked;
+    feed.posts[i].liked = value;
     this.props.dispatch({
       type: FEED_UPDATE,
       payload: feed
@@ -62,10 +62,15 @@ class Home extends React.PureComponent{
           />
         }
       >
-        <View style={{flexDirection: 'row', padding: 8, borderBottomWidth: 1, borderColor: '#ddd'}}>
-          <Avatar size={60}/>
-        </View>
-        {this.props.feed.map((post, i) => (
+        <ScrollView horizontal={true} style={styles.avatarWrap}>
+          {this.props.feed.celebrities.map(c => (
+            <View key={c.id} style={styles.avatar}>
+              <Avatar size={55} source={{uri: c.profilePicture.url}} />
+              <Text numberOfLines={1} ellipsizeMode='head' style={styles.avatarUsername}>{c.username}</Text>
+            </View>
+          ))}
+        </ScrollView>
+        {this.props.feed.posts.map((post, i) => (
           <View key={post.id}>
             <View style={{flexDirection: 'row', padding: 10, paddingLeft: 12}}>
               <Avatar size={40} source={{uri: post.profile.profilePicture.url}}/>
@@ -105,6 +110,24 @@ const mapStateToProps = state => {
 };
 
 const styles = StyleSheet.create({
+
+  avatarWrap: {
+    paddingTop: 8,
+    paddingBottom: 8,
+    borderBottomWidth: 1,
+    borderColor: '#ddd'
+  },
+
+  avatar: {
+    width: 90,
+    alignItems: 'center'
+  },
+
+  avatarUsername: {
+    textAlign: 'center',
+    marginTop: 5
+  },
+
   p: {
     marginTop: 8,
     fontSize: 15

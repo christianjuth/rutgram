@@ -20,9 +20,7 @@ exports[`<Avatar /> renders correctly 1`] = `
     proxiedProperties={
       Object {
         "colors": Array [
-          4279419625,
-          4291064301,
-          4294332249,
+          0,
         ],
         "endPoint": undefined,
         "locations": undefined,
@@ -68,7 +66,7 @@ exports[`<Avatar /> renders correctly 1`] = `
               "height": 40,
               "width": 40,
             },
-            undefined,
+            null,
           ]
         }
       >

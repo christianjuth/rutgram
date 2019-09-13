@@ -27,8 +27,14 @@ export function refreshFeed() {
       profile(where: { id: "${state.profileId}" }){
         following{
     			celebrity{
+            id
+            profilePicture{
+              url
+            }
+            username
             posts(first: 5){
               id
+              createdAt
               location
               caption
               likes{
@@ -69,12 +75,20 @@ export function refreshFeed() {
       });
 
       posts.sort((a, b) => {
-        return a.createdAt > b.createdAt ? 1 : -1;
+        return a.createdAt > b.createdAt ? -1 : 1;
+      });
+
+      let celebrities = data.profile.following.map(p => {
+        let { id, profilePicture, username } = p.celebrity;
+        return { id, profilePicture, username };
       });
 
       dispatch({
         type: FEED_LOADED,
-        payload: posts
+        payload: {
+          celebrities,
+          posts
+        }
       });
     });
   };
