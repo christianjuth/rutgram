@@ -111,6 +111,14 @@ const SearchStack = createStackNavigator({
   Search: {
     screen: SearchScreen,
     path: '',
+  },
+  Profile: {
+    screen: HomeProfileScreen,
+    path: 'profile'
+  },
+  Post: {
+    screen: PostScreen,
+    path: ''
   }
 }, config);
 SearchStack.navigationOptions = {

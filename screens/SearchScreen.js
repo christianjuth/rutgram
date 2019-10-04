@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import Constants from 'expo-constants';
 import { Avatar } from 'react-native-paper';
 import { request } from 'graphql-request';
@@ -56,6 +56,10 @@ export default class SettingsScreen extends React.Component{
     }, 300);
   }
 
+  viewProfile(profile) {
+    this.props.navigation.navigate('Profile', { profile });
+  }
+
   render() {
     return(
       <View style={{flex: 1}}>
@@ -64,18 +68,19 @@ export default class SettingsScreen extends React.Component{
             style={styles.headerInput}
             onChangeText={this.onChangeText}
             placeholder='Search Accounts'
+            returnKeyType='search'
           />
         </View>
 
         <View style={{flex: 1}}>
           {this.state.results.map(r => (
-            <View key={r.id} style={styles.row}>
+            <TouchableOpacity onPress={() => this.viewProfile(r)} key={r.id} style={styles.row}>
               <Avatar.Image size={40} style={styles.avatar} source={{uri: r.profilePicture.url}}/>
               <View>
                 <Text style={styles.bold}>{r.username}</Text>
                 <Text>{r.displayName}</Text>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </View>
